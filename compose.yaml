@@ -1,0 +1,26 @@
+version: '3.8'
+name: dockertut
+services:
+  mongoDB:
+    image: mongo
+    container_name: sample_mongo 
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 4000:3000
+    environment:
+      - PORT=3000
+      - MONGOURI=mongodb://mongoDB:27017/usernameDB
+    depends_on:
+      - mongoDB
+
+volumes:
+  mongo_data:
+    driver: local
