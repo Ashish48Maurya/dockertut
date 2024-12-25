@@ -3,21 +3,25 @@ name: dockertut
 services:
   mongoDB:
     image: mongo
-    container_name: sample_mongo 
+    container_name: sample_mongo
     ports:
       - 27017:27017
     volumes:
       - mongo_data:/data/db
 
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
+    volumes:
+      - ./backend:/user/src/app
+      - /user/src/app/node_modules
     ports:
       - 4000:3000
     environment:
       - PORT=3000
       - MONGOURI=mongodb://mongoDB:27017/usernameDB
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       - mongoDB
 
