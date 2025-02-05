@@ -1,0 +1,25 @@
+                # Pass values directly
+# version: '3.8'
+
+# services:
+#   app:
+#     image: node:23-alpine3.20
+#     build: .
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - PORT=3000
+#       - FILE_NAME=main.js
+
+
+
+        # pass env file
+version: '3.8'
+services:
+  app:
+    image: node:23-alpine3.20
+    build: .
+    ports:
+      - "3000:7000"
+    env_file:
+      - .env
